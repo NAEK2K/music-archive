@@ -1,5 +1,7 @@
-from tkinter import W
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Table
+"""
+Models defining the database.
+"""
+from sqlalchemy import Column, ForeignKey, Integer, String, Table
 from sqlalchemy.orm import relationship
 
 from database import Base
@@ -13,6 +15,10 @@ user_band_table = Table(
 
 
 class User(Base):
+    """
+    Users table.
+    """
+
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -24,6 +30,10 @@ class User(Base):
 
 
 class Band(Base):
+    """
+    Bands table.
+    """
+
     __tablename__ = "bands"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -33,6 +43,10 @@ class Band(Base):
 
 
 class Collection(Base):
+    """
+    Collections table.
+    """
+
     __tablename__ = "collections"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -43,6 +57,10 @@ class Collection(Base):
 
 
 class Song(Base):
+    """
+    Songs table.
+    """
+
     __tablename__ = "songs"
 
     id = Column(Integer, primary_key=True, index=True)
