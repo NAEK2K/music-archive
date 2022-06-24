@@ -4,57 +4,77 @@ Schemas for data validation and structure.
 from pydantic import BaseModel
 
 
-class UserBase(BaseModel):
-    """
-    Base user schema.
-    """
-
-    email: str
-
-
-class UserCreate(UserBase):
+class UserCreate(BaseModel):
     """
     Create user schema.
     """
 
     name: str
+    email: str
     password: str
 
 
-class User(UserBase):
+class UserCreateResponse(BaseModel):
     """
-    ORM user schema.
+    Create user response schema.
     """
 
     id: int
     name: str
+    email: str
 
     class Config:
         """
-        Pydantic config.
+        Config
         """
 
         orm_mode = True
 
 
-class BandBase(BaseModel):
+class BandCreate(BaseModel):
     """
-    Base band schema.
+    Create band schema.
     """
 
     name: str
 
 
-class Band(BandBase):
+class BandCreateResponse(BaseModel):
     """
-    ORM band schema.
+    Create band response schema.
     """
 
     id: int
+    name: str
 
     class Config:
         """
-        Pydantic config.
+        Config
+        """
+
+        orm_mode = True
+
+
+class BandJoin(BaseModel):
+    """
+    Join band schema.
+    """
+
+    band_id: int
+    user_id: int
+
+
+class BandJoinResponse(BaseModel):
+    """
+    Join band response schema.
+    """
+
+    band_id: int
+    user_id: int
+
+    class Config:
+        """
+        Config
         """
 
         orm_mode = True

@@ -23,6 +23,13 @@ def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
 
 
+def get_user_by_name(db: Session, name: str):
+    """
+    Get user by email.
+    """
+    return db.query(models.User).filter(models.User.name == name).first()
+
+
 def create_user(db: Session, user: schema.UserCreate):
     """
     Create a new user.
@@ -49,7 +56,7 @@ def get_band_by_name(db: Session, name: str):
     return db.query(models.Band).filter(models.Band.name == name).first()
 
 
-def create_band(db: Session, band: schema.BandBase):
+def create_band(db: Session, band: schema.BandCreate):
     """
     Create a new band.
     """
@@ -58,3 +65,26 @@ def create_band(db: Session, band: schema.BandBase):
     db.commit()
     db.refresh(db_band)
     return db_band
+
+
+def get_band_users(db: Session, band_id: int):
+    """
+    Get the users of a band.
+    """
+    return (
+        db.query(models.user_band_table)
+        .filter(models.user_band_table.c.band_id == band_id)
+        .all()
+    )
+
+
+def add_user_band(db: Session, band_join: schema.BandJoin):
+    """
+    Add a user to a band.
+    """
+    user_band_insert = models.user_band_table.insert().values(
+        user_id=band_join.user_id, band_id=band_join.band_id
+    )
+    db.execute(user_band_insert)
+    db.commit()
+    return band_join
